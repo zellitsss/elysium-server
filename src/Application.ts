@@ -8,6 +8,6 @@ export default class Application {
     }
 
     run() {
-
+        this._server.run();
     }
 }

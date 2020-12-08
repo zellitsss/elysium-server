@@ -1,0 +1,29 @@
+{
+  "name": "elysium-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@types/websocket": "^1.0.1",
+    "nanoid": "^3.1.20",
+    "typescript": "^4.1.2",
+    "websocket": "^1.0.32"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zellitsss/elysium-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zellitsss/elysium-server/issues"
+  },
+  "homepage": "https://github.com/zellitsss/elysium-server#readme"
+}
