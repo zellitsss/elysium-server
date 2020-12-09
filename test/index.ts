@@ -5,7 +5,7 @@ import PlayRoom from "./rooms/PlayRoom";
 let app: Application = new Application();
 
 let server: GameServer = new GameServer();
-server.defineRoom('play_room', PlayRoom);
+server.registerRoom('play_room', PlayRoom);
 
 app.setServer(server);
 app.listen(3000);

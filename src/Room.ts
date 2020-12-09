@@ -1,5 +1,7 @@
 import Client from "./Client";
 
+export declare type RoomConstructor = (new (...args: any) => Room);
+
 /**
  * Acting as game instance
  */
@@ -28,7 +30,7 @@ export default class Room {
     }
 
     onMessage(messageID: string, messageCallback: any) {
-
+        
     }
 
     setPatchRate(patchRate: number) {

@@ -1,14 +1,14 @@
-import Room from "./Room";
+import Room, { RoomConstructor } from "./Room";
 import * as Websocket from 'ws';
 import Client from "./Client";
 import * as http from 'http';
+import RoomHandler from "./RoomHandler";
 
-export declare type RoomHandler<T> = new (...args: any[]) => T;
 export default class GameServer {
     WSServer: Websocket.Server;
     _clientList: Client[] = [];
     _roomList: Room[] = [];
-
+    _roomHandlers: {[id: string]: RoomHandler} = {};
     constructor() {
         let httpServer = http.createServer(this.requestListener.bind(this));
 
@@ -29,8 +29,15 @@ export default class GameServer {
 
     }
 
-    defineRoom<T extends RoomHandler<Room>>(name: string, handler: T) {
+    registerRoom(name: string, handler: RoomConstructor) {
+        this._roomHandlers[name] = new RoomHandler(handler);
+    }
 
+    createRoom(name: string): Room {
+        if (this._roomHandlers.hasOwnProperty(name)) {
+            return this._roomHandlers[name].create();
+        }
+        return null;
     }
 
     addClient(client: Client) {
