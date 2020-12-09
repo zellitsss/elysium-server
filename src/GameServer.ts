@@ -46,7 +46,6 @@ export default class GameServer {
 
     listen(port: number) {
 
-        this.WSServer
     }
 
     onRequestToJoinRoom(client: Client, options: any = {}) {

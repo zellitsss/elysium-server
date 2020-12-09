@@ -1,4 +1,5 @@
 import Client from "./Client";
+import Utils from "./Utils";
 
 export declare type RoomConstructor = (new (...args: any) => Room);
 
@@ -8,9 +9,10 @@ export declare type RoomConstructor = (new (...args: any) => Room);
 export default class Room {
 
     private _patchRate: number = 15;
+    id: string;
 
     constructor() {
-        
+        this.id = Utils.generateID();
     }
 
     _onJoin(client: Client, options?: any) {

@@ -1,13 +1,12 @@
 import Room from "./Room";
-
-import { nanoid } from 'nanoid';
 import * as Websocket from 'ws';
+import Utils from "./Utils";
 
 export default class Client {
-    _id: string = '';
+    id: string = '';
 
     constructor() {
-        this._id = nanoid(6);
+        this.id = Utils.generateID();
     }
  
     setConnection() {
