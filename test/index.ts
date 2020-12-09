@@ -8,4 +8,4 @@ let server: GameServer = new GameServer();
 server.defineRoom('play_room', PlayRoom);
 
 app.setServer(server);
-app.run();
+app.listen(3000);

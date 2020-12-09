@@ -1,0 +1,7 @@
+Server constructor
+    Server attach
+        create ws transport
+            create ws server
+                wss on connection
+                    create client
+                        room onjoin

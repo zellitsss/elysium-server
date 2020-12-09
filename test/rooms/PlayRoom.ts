@@ -7,4 +7,12 @@ export default class PlayRoom extends Room {
         });
         this.setPatchRate(20);
     }
+
+    onJoin() {
+
+    }
+
+    onLeave() {
+        
+    }
 }
