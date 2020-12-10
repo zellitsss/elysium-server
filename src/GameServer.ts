@@ -22,12 +22,7 @@ export default class GameServer {
     onConnection(socket: Websocket, request: http.IncomingMessage) {
         console.log('Got a connection')
         let client: Client = new Client(socket);
-        // let options: any = {};
-        // let room: Room;
-        // room._onJoin(client, options);
-        socket.on('close', (code: number, reason: string) => {
-           console.log('Client disconnected', code, reason);
-        });
+        // Add client to global list of server
     }
 
     requestListener(req: http.IncomingMessage, res: http.ServerResponse): void {

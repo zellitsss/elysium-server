@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+enum MessageType {
+    // reserve from 0-9 for operation messages
+
+    // from 10+ for room messages
+    JOIN_ROOM = 10;
+    LEAVE_ROOM = 11;
+}
