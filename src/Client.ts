@@ -4,11 +4,16 @@ import Utils from "./Utils";
 
 export default class Client {
     id: string = '';
+    _ws: Websocket;
 
-    constructor() {
+    constructor(socket?: Websocket) {
         this.id = Utils.generateID();
+        if (socket) {
+            this.attach(socket);
+        }
     }
  
-    setConnection() {
+    attach(socket: Websocket) {
+        this._ws = socket;
     }
 }

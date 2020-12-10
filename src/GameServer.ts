@@ -9,20 +9,21 @@ export default class GameServer {
     _clientList: Client[] = [];
     _roomList: Room[] = [];
     _roomHandlers: {[id: string]: RoomHandler} = {};
+    _httpServer: http.Server;
     constructor() {
-        let httpServer = http.createServer(this.requestListener.bind(this));
+        this._httpServer = http.createServer(this.requestListener.bind(this));
 
         this.WSServer = new Websocket.Server({
-            server: httpServer
+            server: this._httpServer
         });
         this.WSServer.on('connection', this.onConnection);
     }
 
     onConnection(socket: Websocket, request: http.IncomingMessage) {
-        let client: Client = new Client();
-        let options: any = {};
-        let room: Room;
-        room._onJoin(client, options);
+        let client: Client = new Client(socket);
+        // let options: any = {};
+        // let room: Room;
+        // room._onJoin(client, options);
     }
 
     requestListener(req: http.IncomingMessage, res: http.ServerResponse): void {
@@ -45,7 +46,7 @@ export default class GameServer {
     }
 
     listen(port: number) {
-
+        this._httpServer.listen(port);
     }
 
     onRequestToJoinRoom(client: Client, options: any = {}) {
