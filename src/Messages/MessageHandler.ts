@@ -1,13 +1,19 @@
+import * as Websocket from 'ws';
 export default class MessageHandler {
-    static parse(msg: any) {
+
+    constructor() {
+
+    }
+
+    parse(message: Websocket.Data) {
         // get type: operation msg or room msg
     }
 
-    static processOperation(msg: any) {
+    processOperation(msg: Websocket.Data) {
 
     }
 
-    static processRoom(msg: any) {
+    processRoom(msg: Websocket.Data) {
         
     }
 }
