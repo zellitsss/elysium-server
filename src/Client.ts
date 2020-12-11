@@ -7,20 +7,16 @@ export default class Client {
     _ws: Websocket;
     _messageHandlerCB: (client: Client, message: Websocket.Data) => void = null;
 
-    constructor(socket?: Websocket, messageHandlerCB?: (client: Client, message: Websocket.Data) => void) {
+    constructor(socket?: Websocket) {
         this.id = Utils.generateID();
         if (socket) {
             this.attach(socket);
         }
-        this._messageHandlerCB = messageHandlerCB;
     }
  
     attach(socket: Websocket) {
         this._ws = socket;
         this._ws.on('message', (data: Websocket.Data) => {
-            if (this._messageHandlerCB) {
-                this._messageHandlerCB(this, data);
-            }
         });
     }
 }
