@@ -25,8 +25,12 @@ export default class GameServer {
 
     onConnection(socket: Websocket, request: http.IncomingMessage) {
         console.log('Got a connection');
-        let client: Client = new Client(socket);
+        let client: Client = new Client(socket, this.onOperationMsgCB.bind(this));
         // Add client to global list of server
+    }
+
+    onOperationMsgCB(client: Client, data: Websocket.Data) {
+        
     }
 
     requestListener(req: http.IncomingMessage, res: http.ServerResponse): void {
