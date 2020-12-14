@@ -7,3 +7,12 @@ enum MessageType {
     JOIN_ROOM = 10;
     LEAVE_ROOM = 11;
 }
+
+message Client_JoinRoon {
+    string roomName = 1;
+    string roomID = 2;
+}
+
+message Client_LeaveRoom {
+    string roomID = 1;
+}

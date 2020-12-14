@@ -2,12 +2,13 @@ import Room from "./Room";
 import * as Websocket from 'ws';
 import Utils from "./Utils";
 import { MessageCallback } from "./Messages/MessageHandler";
+import * as Messages from './Messages/Messages';
 
 export default class Client {
     id: string = '';
     _ws: Websocket;
-    _messageHandlerCB: MessageCallback = null;
-    _serverOperationCB: MessageCallback = null
+    _messageHandlerCB: <T>(client: Client, clientMessage: T) => void = null;
+    _serverOperationCB: MessageCallback = null;
 
     constructor(socket?: Websocket, serverOperationCB?: MessageCallback) {
         this.id = Utils.generateID();
@@ -24,20 +25,27 @@ export default class Client {
         this._ws.on('message', this.onMessageCB.bind(this));
     }
 
+    attachRoomCB(messageHandlerCB: MessageCallback) {
+        this._messageHandlerCB = messageHandlerCB;
+    }
+
     onMessageCB(data: Websocket.Data) {
         // TODO: Add logic about determining message type
         if (false) {
             this.processOperationMessage(data);
         } else {
-            this.processRoomMessage(data);
+            this.processRoomMessage('join_room', data);
         }
     }
 
-    processRoomMessage(data: Websocket.Data) {
+    processRoomMessage(id: string, data: Websocket.Data) {
         // TODO: Extract actual room message, for now just use the original one
+        this._messageHandlerCB<Messages.Client_JoinRoon>(this, Messages.Client_JoinRoon.create());
     }
 
     processOperationMessage(data: Websocket.Data) {
         this._serverOperationCB(this, data);
     }
+
+
 }
