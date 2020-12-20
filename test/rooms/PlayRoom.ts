@@ -1,5 +1,5 @@
-import Client from "../../src/Client";
-import Room from "../../src/Room";
+import { Client } from "../../src/Client";
+import { Room } from "../../src/Room";
 import * as Messages from '../../src/Messages/Messages';
 
 export default class PlayRoom extends Room {

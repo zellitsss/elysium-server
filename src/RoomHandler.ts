@@ -1,6 +1,6 @@
-import Room, { RoomConstructor } from "./Room";
+import { Room, RoomConstructor } from "./Room";
 
-export default class RoomHandler {
+export class RoomHandler {
     _klass: RoomConstructor;
     _options: any = {};
 

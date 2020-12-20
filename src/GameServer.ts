@@ -1,11 +1,11 @@
-import Room, { RoomConstructor } from "./Room";
+import { Room,RoomConstructor } from "./Room";
 import * as Websocket from 'ws';
-import Client from "./Client";
 import * as http from 'http';
-import RoomHandler from "./RoomHandler";
+import { RoomHandler } from "./RoomHandler";
 import MessageHandler from "./Messages/MessageHandler";
+import { Client } from "./Client";
 
-export default class GameServer {
+export class GameServer {
     WSServer: Websocket.Server;
     _clientList: Client[] = [];
     _roomList: Room[] = [];

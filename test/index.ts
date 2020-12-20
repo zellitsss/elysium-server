@@ -1,6 +1,6 @@
-import Application from "../src/Application";
-import GameServer from "../src/GameServer";
-import PlayRoom from "./rooms/PlayRoom";
+import { Application } from '../src/Application';
+import { GameServer } from '../src/GameServer';
+import PlayRoom from './rooms/PlayRoom';
 
 let app: Application = new Application();
 

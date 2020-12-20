@@ -1,13 +1,13 @@
-import Client from "./Client";
+import { Client } from "./Client";
 import { MessageCallback } from "./Messages/MessageHandler";
-import Utils from "./Utils";
+import { Utils } from "./Utils";
 
 export declare type RoomConstructor = (new (...args: any) => Room);
 
 /**
  * Acting as game instance
  */
-export default class Room {
+export class Room {
 
     id: string;
     private _patchRate: number = 15;

@@ -1,10 +1,10 @@
-import Room from "./Room";
+import { Room } from "./Room";
 import * as Websocket from 'ws';
-import Utils from "./Utils";
+import { Utils } from "./Utils";
 import { MessageCallback } from "./Messages/MessageHandler";
 import * as Messages from './Messages/Messages';
 
-export default class Client {
+export class Client {
     id: string = '';
     _ws: Websocket;
     _messageHandlerCB: <T>(client: Client, clientMessage: T) => void = null;

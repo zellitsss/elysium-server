@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-export default class Utils {
+export class Utils {
     static generateID(): string {
         return nanoid(6);
     }

@@ -1,6 +1,6 @@
-import GameServer from "./GameServer";
+import { GameServer } from "./GameServer";
 
-export default class Application {
+export class Application {
     _server: GameServer;
 
     setServer(server: GameServer) {
