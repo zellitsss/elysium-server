@@ -7,7 +7,7 @@ import * as Messages from './Messages/Messages';
 export class Client {
     id: string = '';
     _ws: Websocket;
-    _messageHandlerCB: <T>(client: Client, clientMessage: T) => void = null;
+    _messageHandlerCB: <T>(messageID: string, client: Client, clientMessage: T) => void = null;
     _serverOperationCB: MessageCallback = null;
 
     constructor(socket?: Websocket, serverOperationCB?: MessageCallback) {

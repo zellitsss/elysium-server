@@ -11,7 +11,7 @@ export class Room {
 
     id: string;
     private _patchRate: number = 15;
-    private _messageHandlers: {[id: string]: any} = {};
+    private _messageHandlers: { [id: string]: any } = {};
 
     constructor() {
         this.id = Utils.generateID();
@@ -33,12 +33,17 @@ export class Room {
 
     }
 
-    onMessage<T>(messageID: string, messageCallback: T) {
+    /**
+     * Register a room message. For now just use the generate message from protobuf
+     * @param messageID 
+     * @param messageCallback 
+     */
+    onMessage<T>(messageID: string, messageCallback: MessageCallback<T>) {
         this._messageHandlers[messageID] = messageCallback;
     }
 
-    onMessageCB<T>(client: Client, clientMsg: T) {
-
+    onMessageCB<T>(messageID: string, client: Client, clientMsg: T) {
+        this._messageHandlers[messageID](client, clientMsg);
     }
 
     setPatchRate(patchRate: number) {

@@ -5,8 +5,8 @@ import * as Messages from '../../src/Messages/Messages';
 export default class PlayRoom extends Room {
 
     onCreate() {
-        this.onMessage('join_room', (client: Client, clientMsg: Messages.Client_JoinRoon) => {
-            
+        this.onMessage('client_joinroom', (client: Client, message: Messages.Client_JoinRoon) => {
+
         });
         this.setPatchRate(20);
     }
