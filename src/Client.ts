@@ -1,5 +1,5 @@
 import * as Websocket from 'ws';
-import { Utils } from "./Utils";
+import { GetMessageType, Utils } from "./Utils";
 
 export class Client {
     id: string = '';
@@ -15,7 +15,13 @@ export class Client {
     attach(socket: Websocket) {
         this._ws = socket;
         this._ws.on('message', (data: Websocket.Data) => {
-
+            // get message data
+            // get message type
+            let msgType: number = GetMessageType(data);
+            // resolve message with type
+            if (msgType > -1) {
+                this.resolveMessage(msgType.toString());
+            }
         })
     }
 
@@ -25,7 +31,7 @@ export class Client {
 
     /**
      * Register new message callback
-     * @param id use the enum MessageType that is defined in proto
+     * @param id use the enum MessageType that is defined in proto, should be used with toString()
      * @param callback which has the message is the generated message from proto
      */
     registerMessage(id: string, callback: (client: Client, message: any) => void) {
