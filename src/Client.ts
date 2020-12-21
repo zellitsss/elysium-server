@@ -7,10 +7,10 @@ import * as Messages from './Messages/Messages';
 export class Client {
     id: string = '';
     _ws: Websocket;
-    _messageHandlerCB: <T>(messageID: string, client: Client, clientMessage: T) => void = null;
-    _serverOperationCB: MessageCallback = null;
+    _messageHandlerCB: <T>(messageID: string, client: Client, clientMsg: T) => void = null;
+    _serverOperationCB: any = null;
 
-    constructor(socket?: Websocket, serverOperationCB?: MessageCallback) {
+    constructor(socket?: Websocket, serverOperationCB?: any) {
         this.id = Utils.generateID();
         if (socket) {
             this.attach(socket);
@@ -25,7 +25,7 @@ export class Client {
         this._ws.on('message', this.onMessageCB.bind(this));
     }
 
-    attachRoomCB(messageHandlerCB: MessageCallback) {
+    attachRoomCB(messageHandlerCB: <T>(messageID: string, client: Client, clientMsg: T) => void) {
         this._messageHandlerCB = messageHandlerCB;
     }
 
@@ -38,9 +38,9 @@ export class Client {
         }
     }
 
-    processRoomMessage(id: string, data: Websocket.Data) {
+    processRoomMessage<T>(id: string, message: T) {
         // TODO: Extract actual room message, for now just use the original one
-        this._messageHandlerCB<Messages.Client_JoinRoon>(this, Messages.Client_JoinRoon.create());
+        this._messageHandlerCB<T>(id, this, message);
     }
 
     processOperationMessage(data: Websocket.Data) {
