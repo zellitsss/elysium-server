@@ -68,8 +68,9 @@ export class GameServer {
         return r;
     }
 
-    private _messageCallback: {[id: string]: <T>(client: Client, message: T) => void} = null;
-    registerMessage(id: string, callback: <T>(client: Client, message: T) => void) {
+    private _messageCallback: {[id: string]: (client: Client, message: any) => void} = null;
+    
+    registerMessage(id: string, callback: (client: Client, message: any) => void) {
         this._messageCallback[id] = callback;
     }
 }

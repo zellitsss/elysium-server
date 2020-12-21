@@ -21,18 +21,18 @@ export class Client {
 
     // Start testing for new message register
 
-    private _messageHandler: {[id: string]: <T>(client: Client, message: T) => void} = null;
+    private _messageHandler: {[id: string]: (client: Client, message: any) => void} = null;
 
     /**
      * Register new message callback
      * @param id use the enum MessageType that is defined in proto
      * @param callback which has the message is the generated message from proto
      */
-    registerMessage(id: string, callback: <T>(client: Client, message: T) => void) {
+    registerMessage(id: string, callback: (client: Client, message: any) => void) {
         this._messageHandler[id] = callback;
     }
 
-    resolveMessage<T>(message: T) {
+    resolveMessage(message: any) {
         let messageType = 0;
         if (this._messageHandler.hasOwnProperty(messageType)) {
             this._messageHandler[messageType](this, message);

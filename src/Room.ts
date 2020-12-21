@@ -10,14 +10,16 @@ export class Room {
 
     id: string;
     private _patchRate: number = 15;
-    private _messageHandlers: { [id: string]: any } = {};
+    private _messageHandlers: { [id: string]: (client: Client, message: any) => void } = {};
 
     constructor() {
         this.id = Utils.generateID();
     }
 
     _onJoin(client: Client, options?: any) {
-        // client.attachRoomCB(this.onMessageCB.bind(this));
+        for (let [id, callback] of Object.entries(this._messageHandlers)) {
+            client.registerMessage(id, callback);
+        }
     }
 
     onCreate() {
@@ -37,12 +39,8 @@ export class Room {
      * @param messageID 
      * @param messageCallback 
      */
-    onMessage<T>(messageID: string, messageCallback: any) {
+    onMessage(messageID: string, messageCallback: (client: Client, message: any) => void) {
         this._messageHandlers[messageID] = messageCallback;
-    }
-
-    onMessageCB<T>(messageID: string, client: Client, clientMsg: T) {
-        this._messageHandlers[messageID](client, clientMsg);
     }
 
     setPatchRate(patchRate: number) {
