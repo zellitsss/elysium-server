@@ -4,3 +4,4 @@ export { Client } from './Client';
 export { Room } from './Room';
 export { RoomHandler } from './RoomHandler';
 export { Utils } from './Utils';
+export { MessageHandler } from './Messages/MessageHandler';

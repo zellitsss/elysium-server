@@ -1,12 +1,9 @@
 import * as Websocket from 'ws';
 import { Client } from '../Client';
 
-export declare type MessageCallback<T> = (client: Client, message: T) => void;
-export default class MessageHandler {
-
-    constructor() {
-    }
-
-    process(client: Client, message: Websocket.Data) {
+export abstract class MessageHandler {
+    private _messageCallback: {[id: number]: <T>(client: Client, mesage: T) => void} = null;
+    registerMessage(id: number, callback: <T>(client: Client, message: T) => void) {
+        
     }
 }

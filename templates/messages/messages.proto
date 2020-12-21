@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+/** Notes for the safty use:
+*** Don't touch operation messages
+*** Every single message must has MessageType at the position 0;
+*/
+
+enum MessageType {
+    // OPERTATION MESSAGES: DO NOT CHANGE ANYTHING FROM 0-9
+    JOIN_ROOM = 0;
+    LEAVE_ROOM = 1;
+    // From 10+ for custom messages
+
+}
+
+// OPERATION MESSAGES: Begin
+
+// OPERATION MESSAGES: End
+
+enum CustomMessageType {
+    CLIENT_MOVE = 0;
+}
+
+message Client_Move {
+    MessageType messageType = 0;
+    uint32 moveX = 1;
+    uint32 moveY = 2;
+}

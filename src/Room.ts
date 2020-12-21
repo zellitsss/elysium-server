@@ -1,5 +1,4 @@
 import { Client } from "./Client";
-import { MessageCallback } from "./Messages/MessageHandler";
 import { Utils } from "./Utils";
 
 export declare type RoomConstructor = (new (...args: any) => Room);
@@ -18,7 +17,7 @@ export class Room {
     }
 
     _onJoin(client: Client, options?: any) {
-        client.attachRoomCB(this.onMessageCB.bind(this));
+        // client.attachRoomCB(this.onMessageCB.bind(this));
     }
 
     onCreate() {
@@ -38,7 +37,7 @@ export class Room {
      * @param messageID 
      * @param messageCallback 
      */
-    onMessage<T>(messageID: string, messageCallback: MessageCallback<T>) {
+    onMessage<T>(messageID: string, messageCallback: any) {
         this._messageHandlers[messageID] = messageCallback;
     }
 

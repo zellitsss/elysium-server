@@ -2,7 +2,6 @@ import { Room,RoomConstructor } from "./Room";
 import * as Websocket from 'ws';
 import * as http from 'http';
 import { RoomHandler } from "./RoomHandler";
-import MessageHandler from "./Messages/MessageHandler";
 import { Client } from "./Client";
 
 export class GameServer {
@@ -11,7 +10,6 @@ export class GameServer {
     _roomList: Room[] = [];
     _roomHandlers: {[id: string]: RoomHandler} = {};
     _httpServer: http.Server;
-    _messageHandler: MessageHandler;
 
     constructor() {
         this._httpServer = http.createServer(this.requestListener.bind(this));
@@ -25,7 +23,10 @@ export class GameServer {
 
     onConnection(socket: Websocket, request: http.IncomingMessage) {
         console.log('Got a connection');
-        let client: Client = new Client(socket, this.onOperationMsgCB.bind(this));
+        let client: Client = new Client(socket);
+        for (let [id, callback] of Object.entries(this._messageCallback)) {
+            client.registerMessage(id, callback);
+        }
         // Add client to global list of server
     }
 
@@ -67,5 +68,8 @@ export class GameServer {
         return r;
     }
 
-    
+    private _messageCallback: {[id: string]: <T>(client: Client, message: T) => void} = null;
+    registerMessage(id: string, callback: <T>(client: Client, message: T) => void) {
+        this._messageCallback[id] = callback;
+    }
 }

@@ -1,51 +1,41 @@
-import { Room } from "./Room";
 import * as Websocket from 'ws';
 import { Utils } from "./Utils";
-import { MessageCallback } from "./Messages/MessageHandler";
-import * as Messages from './Messages/Messages';
 
 export class Client {
     id: string = '';
     _ws: Websocket;
-    _messageHandlerCB: <T>(messageID: string, client: Client, clientMsg: T) => void = null;
-    _serverOperationCB: any = null;
 
-    constructor(socket?: Websocket, serverOperationCB?: any) {
+    constructor(socket?: Websocket) {
         this.id = Utils.generateID();
         if (socket) {
             this.attach(socket);
-        }
-        if (serverOperationCB) {
-            this._serverOperationCB = serverOperationCB;
         }
     }
  
     attach(socket: Websocket) {
         this._ws = socket;
-        this._ws.on('message', this.onMessageCB.bind(this));
+        this._ws.on('message', (data: Websocket.Data) => {
+
+        })
     }
 
-    attachRoomCB(messageHandlerCB: <T>(messageID: string, client: Client, clientMsg: T) => void) {
-        this._messageHandlerCB = messageHandlerCB;
+    // Start testing for new message register
+
+    private _messageHandler: {[id: string]: <T>(client: Client, message: T) => void} = null;
+
+    /**
+     * Register new message callback
+     * @param id use the enum MessageType that is defined in proto
+     * @param callback which has the message is the generated message from proto
+     */
+    registerMessage(id: string, callback: <T>(client: Client, message: T) => void) {
+        this._messageHandler[id] = callback;
     }
 
-    onMessageCB(data: Websocket.Data) {
-        // TODO: Add logic about determining message type
-        if (false) {
-            this.processOperationMessage(data);
-        } else {
-            this.processRoomMessage('join_room', data);
+    resolveMessage<T>(message: T) {
+        let messageType = 0;
+        if (this._messageHandler.hasOwnProperty(messageType)) {
+            this._messageHandler[messageType](this, message);
         }
     }
-
-    processRoomMessage<T>(id: string, message: T) {
-        // TODO: Extract actual room message, for now just use the original one
-        this._messageHandlerCB<T>(id, this, message);
-    }
-
-    processOperationMessage(data: Websocket.Data) {
-        this._serverOperationCB(this, data);
-    }
-
-
 }
