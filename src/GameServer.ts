@@ -3,6 +3,7 @@ import * as Websocket from 'ws';
 import * as http from 'http';
 import { RoomHandler } from "./RoomHandler";
 import { Client } from "./Client";
+import * as MessageDefines from "./Messages/MessageDefines";
 
 export class GameServer {
     WSServer: Websocket.Server;
@@ -16,8 +17,7 @@ export class GameServer {
         this.WSServer = new Websocket.Server({
             server: this._httpServer
         });
-
-
+        this.registerDefaultCallbacks();
         this.WSServer.on('connection', this.onConnection.bind(this));
     }
 
@@ -28,10 +28,6 @@ export class GameServer {
             client.registerMessage(id, callback);
         }
         // Add client to global list of server
-    }
-
-    onOperationMsgCB(client: Client, data: Websocket.Data) {
-        
     }
 
     requestListener(req: http.IncomingMessage, res: http.ServerResponse): void {
@@ -57,10 +53,6 @@ export class GameServer {
         this._httpServer.listen(port);
     }
 
-    onRequestToJoinRoom(client: Client, options: any = {}) {
-        
-    }
-
     findRoom(options: any = {}): Room {
         
         // Psuedo code
@@ -69,8 +61,38 @@ export class GameServer {
     }
 
     private _messageCallback: {[id: string]: (client: Client, message: any) => void} = null;
-    
+
     registerMessage(id: string, callback: (client: Client, message: any) => void) {
         this._messageCallback[id] = callback;
+    }
+
+    private _onClientJoinRoom: (client: Client, message: any) => void = null;
+    private _onClientLeaveRoom: (client: Client, message: any) => void = null;
+
+    setOnClientJoinRoomCB(callback: (client: Client, message: any) => void, id?: string) {
+        this._onClientJoinRoom = callback;
+        if (id) {
+            this.registerMessage(id, this._onClientJoinRoom);
+        } else {
+            this.registerMessage(MessageDefines.MessageType.JOIN_ROOM.toString(), this._onClientJoinRoom);
+        }
+    }
+
+    setOnClientLeaveRoomCB(callback: (client: Client, message: any) => void, id?: string) {
+        this._onClientLeaveRoom = callback;
+        if (id) {
+            this.registerMessage(id, this._onClientLeaveRoom);
+        } else {
+            this.registerMessage(MessageDefines.MessageType.LEAVE_ROOM.toString(), this._onClientLeaveRoom);
+        }
+    }
+
+    registerDefaultCallbacks() {
+        this.setOnClientJoinRoomCB((client: Client, message: any) => {
+
+        });
+        this.setOnClientLeaveRoomCB((client: Client, message: any) => {
+
+        });
     }
 }
