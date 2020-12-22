@@ -9,18 +9,25 @@ enum MessageType {
     // OPERTATION MESSAGES: DO NOT CHANGE ANYTHING FROM 0-9
     JOIN_ROOM = 0;
     LEAVE_ROOM = 1;
-    // From 10+ for custom messages
+    
+    OP_END = 9;
+    // Custom
 
 }
 
 // OPERATION MESSAGES: Begin
-
-// OPERATION MESSAGES: End
-
-enum CustomMessageType {
-    CLIENT_MOVE = 0;
+message Client_JoinRoom {
+    MessageType messageType = 0;
 }
 
+message Client_LeaveRoom {
+    MessageType messageType = 0;
+}
+// OPERATION MESSAGES: End
+
+// CUSTOM MESSAGES
+
+// Sample custom message
 message Client_Move {
     MessageType messageType = 0;
     uint32 moveX = 1;
