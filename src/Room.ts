@@ -16,17 +16,25 @@ export class Room {
         this.id = Utils.generateID();
     }
 
-    _onJoin(client: Client, options?: any) {
+    private _onCreate() {
+
+    }
+
+    onCreate() {
+        
+    }
+    
+    private _onJoin(client: Client, options?: any) {
         for (let [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
     }
 
-    onCreate() {
+    onJoin() {
 
     }
 
-    onJoin() {
+    private _onLeave() {
 
     }
 
