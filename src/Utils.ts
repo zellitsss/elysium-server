@@ -7,7 +7,7 @@ export class Utils {
     }
 }
 
-export function GetMessageType(message): number {
+export function GetMessageType(message: Buffer): number {
     let reader: $protobuf.Reader = $protobuf.Reader.create(message);
     // let end = length === undefined ? reader.len : reader.pos + length;
     let tag = reader.uint32();

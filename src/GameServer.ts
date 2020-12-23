@@ -95,10 +95,10 @@ export class GameServer {
 
     registerDefaultCallbacks() {
         this.setOnClientJoinRoomCB((client: Client, message: any) => {
-
+            console.log(client.id, 'join room');
         });
         this.setOnClientLeaveRoomCB((client: Client, message: any) => {
-
+            console.log(client.id, 'leave room');
         });
     }
 }

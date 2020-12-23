@@ -15,14 +15,15 @@ export class Client {
     attach(socket: Websocket) {
         this._ws = socket;
         this._ws.on('message', (data: Websocket.Data) => {
-            // get message data
-            // get message type
-            let msgType: number = GetMessageType(data);
-            // resolve message with type
-            if (msgType > -1) {
+            if (typeof data === 'string') {
+                
+            } else if (data instanceof Buffer) {
+                let msgType: number = GetMessageType(data);
                 this.resolveMessage(msgType.toString());
+            } else {
+                // data type of ArrayBuffer | Buffer[] will be handled later
             }
-        })
+        });
     }
 
     // Start testing for new message register
