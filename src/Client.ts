@@ -27,7 +27,7 @@ export class Client {
 
     // Start testing for new message register
 
-    private _messageHandler: {[id: string]: (client: Client, message: any) => void} = null;
+    private _messageHandler: {[id: string]: (client: Client, message: any) => void} = {};
 
     /**
      * Register new message callback
