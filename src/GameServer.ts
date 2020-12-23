@@ -60,7 +60,7 @@ export class GameServer {
         return r;
     }
 
-    private _messageCallback: {[id: string]: (client: Client, message: any) => void} = null;
+    private _messageCallback: {[id: string]: (client: Client, message: any) => void} = {};
 
     registerMessage(id: string, callback: (client: Client, message: any) => void) {
         this._messageCallback[id] = callback;
@@ -71,6 +71,9 @@ export class GameServer {
 
     setOnClientJoinRoomCB(callback: (client: Client, message: any) => void, id?: string) {
         this._onClientJoinRoom = callback;
+        if (this._onClientJoinRoom == null) {
+            return;
+        }
         if (id) {
             this.registerMessage(id, this._onClientJoinRoom);
         } else {
@@ -80,6 +83,9 @@ export class GameServer {
 
     setOnClientLeaveRoomCB(callback: (client: Client, message: any) => void, id?: string) {
         this._onClientLeaveRoom = callback;
+        if (this._onClientLeaveRoom == null) {
+            return;
+        }
         if (id) {
             this.registerMessage(id, this._onClientLeaveRoom);
         } else {
