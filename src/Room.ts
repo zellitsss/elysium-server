@@ -1,4 +1,5 @@
 import { Client } from "./Client";
+import { MessageCallback } from "./Types";
 import { Utils } from "./Utils";
 
 export declare type RoomConstructor = (new (...args: any) => Room);
@@ -10,7 +11,7 @@ export class Room {
 
     id: string;
     private _patchRate: number = 15;
-    private _messageHandlers: { [id: string]: (client: Client, message: any) => void } = {};
+    private _messageHandlers: { [id: string]: MessageCallback } = {};
 
     constructor() {
         this.id = Utils.generateID();
@@ -47,7 +48,7 @@ export class Room {
      * @param messageID 
      * @param messageCallback 
      */
-    onMessage(messageID: string, messageCallback: (client: Client, message: any) => void) {
+    onMessage(messageID: string, messageCallback: MessageCallback) {
         this._messageHandlers[messageID] = messageCallback;
     }
 

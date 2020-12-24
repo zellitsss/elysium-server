@@ -1,4 +1,5 @@
 import * as Websocket from 'ws';
+import { MessageCallback } from './Types';
 import { GetMessageType, Utils } from "./Utils";
 
 export class Client {
@@ -28,20 +29,20 @@ export class Client {
 
     // Start testing for new message register
 
-    private _messageHandler: {[id: string]: (client: Client, message: any) => void} = {};
+    private _messageHandlers: {[id: string]: MessageCallback} = {};
 
     /**
      * Register new message callback
      * @param id use the enum MessageType that is defined in proto, should be used with toString()
      * @param callback which has the message is the generated message from proto
      */
-    registerMessage(id: string, callback: (client: Client, message: any) => void) {
-        this._messageHandler[id] = callback;
+    registerMessage(id: string, callback: MessageCallback) {
+        this._messageHandlers[id] = callback;
     }
 
     resolveMessage(id: string, message: any) {
-        if (this._messageHandler.hasOwnProperty(id)) {
-            this._messageHandler[id](this, message);
+        if (this._messageHandlers.hasOwnProperty(id)) {
+            this._messageHandlers[id](this, message);
         }
     }
 }

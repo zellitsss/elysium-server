@@ -4,6 +4,7 @@ import * as http from 'http';
 import { RoomHandler } from "./RoomHandler";
 import { Client } from "./Client";
 import * as MessageDefines from "./Messages/MessageDefines";
+import { MessageCallback } from "./Types";
 
 export class GameServer {
     WSServer: Websocket.Server;
@@ -24,7 +25,7 @@ export class GameServer {
     onConnection(socket: Websocket, request: http.IncomingMessage) {
         console.log('Got a connection');
         let client: Client = new Client(socket);
-        for (let [id, callback] of Object.entries(this._messageCallback)) {
+        for (let [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
         // Add client to global list of server
@@ -60,16 +61,16 @@ export class GameServer {
         return r;
     }
 
-    private _messageCallback: {[id: string]: (client: Client, message: any) => void} = {};
+    private _messageHandlers: {[id: string]: MessageCallback} = {};
 
-    registerMessage(id: string, callback: (client: Client, message: any) => void) {
-        this._messageCallback[id] = callback;
+    registerMessage(id: string, callback: MessageCallback) {
+        this._messageHandlers[id] = callback;
     }
 
-    private _onClientJoinRoom: (client: Client, message: any) => void = null;
-    private _onClientLeaveRoom: (client: Client, message: any) => void = null;
+    private _onClientJoinRoom: MessageCallback = null;
+    private _onClientLeaveRoom: MessageCallback = null;
 
-    setOnClientJoinRoomCB(callback: (client: Client, message: any) => void, id?: string) {
+    setOnClientJoinRoomCB(callback: MessageCallback, id?: string) {
         this._onClientJoinRoom = callback;
         if (this._onClientJoinRoom == null) {
             return;
@@ -81,7 +82,7 @@ export class GameServer {
         }
     }
 
-    setOnClientLeaveRoomCB(callback: (client: Client, message: any) => void, id?: string) {
+    setOnClientLeaveRoomCB(callback: MessageCallback, id?: string) {
         this._onClientLeaveRoom = callback;
         if (this._onClientLeaveRoom == null) {
             return;
