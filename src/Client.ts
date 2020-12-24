@@ -19,7 +19,7 @@ export class Client {
                 
             } else if (data instanceof Buffer) {
                 let msgType: number = GetMessageType(data);
-                this.resolveMessage(msgType.toString());
+                this.resolveMessage(msgType.toString(), data);
             } else {
                 // data type of ArrayBuffer | Buffer[] will be handled later
             }
@@ -39,10 +39,9 @@ export class Client {
         this._messageHandler[id] = callback;
     }
 
-    resolveMessage(message: any) {
-        let messageType = 0;
-        if (this._messageHandler.hasOwnProperty(messageType)) {
-            this._messageHandler[messageType](this, message);
+    resolveMessage(id: string, message: any) {
+        if (this._messageHandler.hasOwnProperty(id)) {
+            this._messageHandler[id](this, message);
         }
     }
 }
