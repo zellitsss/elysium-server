@@ -1,11 +1,9 @@
 import * as Websocket from 'ws';
-import { GameServer } from './GameServer';
-import { Room } from './Room';
 import { MessageCallback } from './Types';
-import { GetMessageType, Utils } from "./Utils";
+import { GetMessageType, Utils } from './Utils';
 
 export class Client {
-    id: string = '';
+    id: string;
     _ws: Websocket;
 
     constructor(socket?: Websocket) {
@@ -15,13 +13,13 @@ export class Client {
         }
     }
  
-    attach(socket: Websocket) {
+    attach(socket: Websocket): void {
         this._ws = socket;
         this._ws.on('message', (data: Websocket.Data) => {
             if (typeof data === 'string') {
-                
+                // handle JSON messages
             } else if (data instanceof Buffer) {
-                let msgType: number = GetMessageType(data);
+                const msgType: number = GetMessageType(data);
                 this.resolveMessage(msgType.toString(), data);
             } else {
                 // data type of ArrayBuffer | Buffer[] will be handled later
@@ -38,12 +36,12 @@ export class Client {
      * @param id use the enum MessageType that is defined in proto, should be used with toString()
      * @param callback which has the message is the generated message from proto
      */
-    registerMessage(id: string, callback: MessageCallback) {
+    registerMessage(id: string, callback: MessageCallback): void {
         this._messageHandlers[id] = callback;
     }
 
-    resolveMessage(id: string, message: any) {
-        if (this._messageHandlers.hasOwnProperty(id)) {
+    resolveMessage(id: string, message: any): void {
+        if (Object.prototype.hasOwnProperty.call(this, id)) {
             this._messageHandlers[id](this, message);
         }
     }

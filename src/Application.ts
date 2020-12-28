@@ -1,13 +1,13 @@
-import { GameServer } from "./GameServer";
+import { GameServer } from './GameServer';
 
 export class Application {
     _server: GameServer;
 
-    setServer(server: GameServer) {
-       this._server = server;
+    setServer(server: GameServer): void {
+        this._server = server;
     }
 
-    listen(port: number) {
+    listen(port: number): void {
         this._server.listen(port);
     }
 }

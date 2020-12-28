@@ -1,6 +1,6 @@
-import { Client } from "./Client";
-import { Room, RoomConstructor } from "./Room";
-import { RoomHandler } from "./RoomHandler";
+import { Client } from './Client';
+import { Room, RoomConstructor } from './Room';
+import { RoomHandler } from './RoomHandler';
 
 export class MatchMaker {
 
@@ -12,7 +12,7 @@ export class MatchMaker {
     }
 
     createRoom(name: string): Room {
-        if (this._roomHandlers.hasOwnProperty(name)) {
+        if (Object.prototype.hasOwnProperty.call(this, name)) {
             return this._roomHandlers[name].create();
         }
         return null;
@@ -28,7 +28,7 @@ export class MatchMaker {
     }
 
     joinOrCreate(name: string, client: Client) {
-        let room: Room = this.findOrCreate(name);
+        const room: Room = this.findOrCreate(name);
         room._onJoin(client);
     }
 }

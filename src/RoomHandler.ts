@@ -1,4 +1,4 @@
-import { Room, RoomConstructor } from "./Room";
+import { Room, RoomConstructor } from './Room';
 
 export class RoomHandler {
     _klass: RoomConstructor;
@@ -10,7 +10,7 @@ export class RoomHandler {
     }
 
     create(): Room {
-        let room: Room = new this._klass(this._options);
+        const room: Room = new this._klass(this._options);
         room._onCreate();
         return room;
     }

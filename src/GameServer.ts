@@ -1,11 +1,10 @@
-import { Room,RoomConstructor } from "./Room";
+import { Room,RoomConstructor } from './Room';
 import * as Websocket from 'ws';
 import * as http from 'http';
-import { RoomHandler } from "./RoomHandler";
-import { Client } from "./Client";
-import * as MessageDefines from "./Messages/MessageDefines";
-import { MessageCallback } from "./Types";
-import { MatchMaker } from "./MatchMaker";
+import { Client } from './Client';
+import * as MessageDefines from './Messages/MessageDefines';
+import { MessageCallback } from './Types';
+import { MatchMaker } from './MatchMaker';
 
 export class GameServer {
     WSServer: Websocket.Server;
@@ -32,15 +31,15 @@ export class GameServer {
 
     onConnection(socket: Websocket, request: http.IncomingMessage) {
         console.log('Got a connection');
-        let client: Client = new Client(socket);
-        for (let [id, callback] of Object.entries(this._messageHandlers)) {
+        const client: Client = new Client(socket);
+        for (const [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
         // Add client to global list of server
     }
 
     requestListener(req: http.IncomingMessage, res: http.ServerResponse): void {
-
+        // Just prevent empty method
     }
 
     registerRoom(name: string, handler: RoomConstructor) {
@@ -62,7 +61,7 @@ export class GameServer {
     findRoom(options: any = {}): Room {
         
         // Psuedo code
-        let r = new Room();
+        const r = new Room();
         return r;
     }
 
@@ -101,7 +100,7 @@ export class GameServer {
 
     registerDefaultCallbacks() {
         this.setOnClientJoinRoomCB((client: Client, message: any) => {
-            let roomType: string = 'game_room';
+            const roomType = 'game_room';
             this._matchMaker.joinOrCreate(roomType, client);
         });
         this.setOnClientLeaveRoomCB((client: Client, message: any) => {

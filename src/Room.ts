@@ -1,6 +1,6 @@
-import { Client } from "./Client";
-import { MessageCallback } from "./Types";
-import { Utils } from "./Utils";
+import { Client } from './Client';
+import { MessageCallback } from './Types';
+import { Utils } from './Utils';
 
 export declare type RoomConstructor = (new (...args: any) => Room);
 
@@ -10,13 +10,13 @@ export declare type RoomConstructor = (new (...args: any) => Room);
 export class Room {
 
     id: string;
-    private _patchRate: number = 15;
+    private _patchRate = 15;
     private _messageHandlers: { [id: string]: MessageCallback } = {};
 
-    isPrivate: boolean = false;
-    allowBot: boolean = false;
-    minPlayer: number = 1;
-    maxPlayer: number = 16;
+    isPrivate = false;
+    allowBot = false;
+    minPlayer = 1;
+    maxPlayer = 16;
 
     constructor() {
         this.id = Utils.generateID();
@@ -29,7 +29,7 @@ export class Room {
     }
 
     public _onJoin(client: Client, options?: any) {
-        for (let [id, callback] of Object.entries(this._messageHandlers)) {
+        for (const [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
         if (this.onJoin) {
@@ -38,7 +38,7 @@ export class Room {
     }
 
     public _onLeave() {
-
+        // Prevent empty method
     }
 
     // Optional abstract methods

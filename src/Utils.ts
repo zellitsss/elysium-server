@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 import * as $protobuf from 'protobufjs/minimal';
 
 export class Utils {
@@ -8,9 +8,9 @@ export class Utils {
 }
 
 export function GetMessageType(message: Buffer): number {
-    let reader: $protobuf.Reader = $protobuf.Reader.create(message);
+    const reader: $protobuf.Reader = $protobuf.Reader.create(message);
     // let end = length === undefined ? reader.len : reader.pos + length;
-    let tag = reader.uint32();
+    const tag = reader.uint32();
     let msgType;
     // first order for message type
     if (tag >>> 3 === 1) {
