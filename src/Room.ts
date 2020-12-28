@@ -35,7 +35,7 @@ export class Room {
         for (const [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
-        client._ws.on('close', (codeZ: number, reason: string) => {
+        client._ws.on('close', (code: number, reason: string) => {
             this._onLeave(client);
         });
         if (this.onJoin) {
@@ -44,7 +44,14 @@ export class Room {
     }
 
     public _onLeave(client: Client) {
-        // Prevent empty method
+        
+        let foundIndex: number = this._clients.findIndex((c: Client) => {
+            return client.id === c.id;
+        });
+        if (foundIndex >= 0) {
+            this._clients.splice(foundIndex, 1);
+        }
+
         if (this.onLeave) {
             this.onLeave(client);
         }
