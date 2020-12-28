@@ -35,19 +35,25 @@ export class Room {
         for (const [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
+        client._ws.on('close', (codeZ: number, reason: string) => {
+            this._onLeave(client);
+        });
         if (this.onJoin) {
             this.onJoin(client);
         }
     }
 
-    public _onLeave() {
+    public _onLeave(client: Client) {
         // Prevent empty method
+        if (this.onLeave) {
+            this.onLeave(client);
+        }
     }
 
     // Optional abstract methods
     public onCreate?(): void;
     public onJoin?(client: Client): void;
-    public onLeave?(): void;
+    public onLeave?(client: Client): void;
 
     /**
      * Register a room message. For now just use the generated message from protobuf
