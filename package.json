@@ -25,7 +25,7 @@
     "test": "ts-node test/index.ts",
     "build:proto": "pbjs -t static-module -o src/Messages/MessageDefines.js src/Messages/MessageDefines.proto && pbts -o src/Messages/MessageDefines.d.ts src/Messages/MessageDefines.js",
     "build": "npm run build:proto && tsc -d",
-    "prepublish": "build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
