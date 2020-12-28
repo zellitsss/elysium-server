@@ -27,8 +27,6 @@ export class Client {
         });
     }
 
-    // Start testing for new message register
-
     private _messageHandlers: {[id: string]: MessageCallback} = {};
 
     /**
