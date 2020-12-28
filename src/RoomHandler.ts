@@ -10,6 +10,8 @@ export class RoomHandler {
     }
 
     create(): Room {
-        return new this._klass(this._options);
+        let room: Room = new this._klass(this._options);
+        room._onCreate();
+        return room;
     }
 }

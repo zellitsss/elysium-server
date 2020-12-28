@@ -1,4 +1,6 @@
 import * as Websocket from 'ws';
+import { GameServer } from './GameServer';
+import { Room } from './Room';
 import { MessageCallback } from './Types';
 import { GetMessageType, Utils } from "./Utils";
 

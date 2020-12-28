@@ -13,35 +13,38 @@ export class Room {
     private _patchRate: number = 15;
     private _messageHandlers: { [id: string]: MessageCallback } = {};
 
+    isPrivate: boolean = false;
+    allowBot: boolean = false;
+    minPlayer: number = 1;
+    maxPlayer: number = 16;
+
     constructor() {
         this.id = Utils.generateID();
     }
 
-    private _onCreate() {
-
-    }
-
-    onCreate() {
-        
-    }
-    
-    private _onJoin(client: Client, options?: any) {
-        for (let [id, callback] of Object.entries(this._messageHandlers)) {
-            client.registerMessage(id, callback);
+    public _onCreate() {
+        if (this.onCreate) {
+            this.onCreate();
         }
     }
 
-    onJoin() {
+    public _onJoin(client: Client, options?: any) {
+        for (let [id, callback] of Object.entries(this._messageHandlers)) {
+            client.registerMessage(id, callback);
+        }
+        if (this.onJoin) {
+            this.onJoin(client);
+        }
+    }
+
+    public _onLeave() {
 
     }
 
-    private _onLeave() {
-
-    }
-
-    onLeave() {
-
-    }
+    // Optional abstract methods
+    public onCreate?(): void;
+    public onJoin?(client: Client): void;
+    public onLeave?(): void;
 
     /**
      * Register a room message. For now just use the generate message from protobuf
@@ -54,5 +57,21 @@ export class Room {
 
     setPatchRate(patchRate: number) {
         this._patchRate = patchRate;
+    }
+
+    setPrivate(isPrivate: boolean) {
+        this.isPrivate = isPrivate;
+    }
+
+    setAllowBot(allowBot: boolean) {
+        this.allowBot = allowBot;
+    }
+    
+    setMinPlayer(num: number) {
+        this.minPlayer = num;
+    }
+
+    setMaxPlayer(num: number) {
+        this.maxPlayer = num;
     }
 }

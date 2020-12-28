@@ -5,21 +5,29 @@ import { RoomHandler } from "./RoomHandler";
 import { Client } from "./Client";
 import * as MessageDefines from "./Messages/MessageDefines";
 import { MessageCallback } from "./Types";
+import { MatchMaker } from "./MatchMaker";
 
 export class GameServer {
     WSServer: Websocket.Server;
     _clientList: Client[] = [];
     _roomList: Room[] = [];
-    _roomHandlers: {[id: string]: RoomHandler} = {};
     _httpServer: http.Server;
+    private _matchMaker: MatchMaker = null;
+
+    static inst: GameServer = null;
 
     constructor() {
+        if (GameServer.inst !== null) {
+            return;
+        }
         this._httpServer = http.createServer(this.requestListener.bind(this));
         this.WSServer = new Websocket.Server({
             server: this._httpServer
         });
         this.registerDefaultCallbacks();
         this.WSServer.on('connection', this.onConnection.bind(this));
+        this._matchMaker = new MatchMaker();
+        GameServer.inst = this;
     }
 
     onConnection(socket: Websocket, request: http.IncomingMessage) {
@@ -36,14 +44,11 @@ export class GameServer {
     }
 
     registerRoom(name: string, handler: RoomConstructor) {
-        this._roomHandlers[name] = new RoomHandler(handler);
+        this._matchMaker.registerRoom(name, handler);
     }
 
     createRoom(name: string): Room {
-        if (this._roomHandlers.hasOwnProperty(name)) {
-            return this._roomHandlers[name].create();
-        }
-        return null;
+        return this._matchMaker.createRoom(name);
     }
 
     addClient(client: Client) {
@@ -96,7 +101,8 @@ export class GameServer {
 
     registerDefaultCallbacks() {
         this.setOnClientJoinRoomCB((client: Client, message: any) => {
-            
+            let roomType: string = 'game_room';
+            this._matchMaker.joinOrCreate(roomType, client);
         });
         this.setOnClientLeaveRoomCB((client: Client, message: any) => {
             console.log(client.id, 'leave room');
