@@ -41,7 +41,7 @@ export class Client {
     }
 
     resolveMessage(id: string, message: any): void {
-        if (Object.prototype.hasOwnProperty.call(this, id)) {
+        if (this._messageHandlers[id]) {
             this._messageHandlers[id](this, message);
         }
     }

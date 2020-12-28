@@ -12,7 +12,7 @@ export class MatchMaker {
     }
 
     createRoom(name: string): Room {
-        if (Object.prototype.hasOwnProperty.call(this, name)) {
+        if (this._roomHandlers[name]) {
             const room: Room = this._roomHandlers[name].create();
             room.type = name;
             this._rooms[room.id] = room;
