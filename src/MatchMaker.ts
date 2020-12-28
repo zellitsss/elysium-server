@@ -13,9 +13,12 @@ export class MatchMaker {
 
     createRoom(name: string): Room {
         if (Object.prototype.hasOwnProperty.call(this, name)) {
-            return this._roomHandlers[name].create();
+            const room: Room = this._roomHandlers[name].create();
+            room.type = name;
+            this._rooms[room.id] = room;
+            return room;
         }
-        return null;
+        throw new Error('This room type is not existed');
     }
 
     /**
@@ -23,12 +26,25 @@ export class MatchMaker {
      * @param name room name
      */
     findOrCreate(name: string): Room {
-        // TODO: Actually find a rooom
-        return this.createRoom(name);
+        let foundRoom: Room;
+        for (const [id, room] of Object.entries(this._rooms)) {
+            if (room.isAvailable()) {
+                foundRoom = room;
+                break;
+            }
+        }
+        if (!foundRoom) {
+            foundRoom = this.createRoom(name);
+        }
+        return foundRoom;
     }
 
     joinOrCreate(name: string, client: Client) {
-        const room: Room = this.findOrCreate(name);
-        room._onJoin(client);
+        try {
+            const room: Room = this.findOrCreate(name);
+            room._onJoin(client);
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

@@ -10,8 +10,10 @@ export declare type RoomConstructor = (new (...args: any) => Room);
 export class Room {
 
     id: string;
+    type: string;
     private _patchRate = 15;
     private _messageHandlers: { [id: string]: MessageCallback } = {};
+    private _clients: Client[] = [];
 
     isPrivate = false;
     allowBot = false;
@@ -29,6 +31,7 @@ export class Room {
     }
 
     public _onJoin(client: Client, options?: any) {
+        this._clients.push(client);
         for (const [id, callback] of Object.entries(this._messageHandlers)) {
             client.registerMessage(id, callback);
         }
@@ -47,7 +50,7 @@ export class Room {
     public onLeave?(): void;
 
     /**
-     * Register a room message. For now just use the generate message from protobuf
+     * Register a room message. For now just use the generated message from protobuf
      * @param messageID 
      * @param messageCallback 
      */
@@ -73,5 +76,19 @@ export class Room {
 
     setMaxPlayer(num: number) {
         this.maxPlayer = num;
+    }
+
+    getCurrentClient(): number {
+        return this._clients.length;
+    }
+
+    /**
+     * Return the availability of the room
+     */
+    isAvailable(): boolean {
+        if (this.getCurrentClient() <= this.maxPlayer && !this.isPrivate) {
+            return true;
+        }
+        return false;
     }
 }
