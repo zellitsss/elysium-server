@@ -43,4 +43,12 @@ export class Client {
             this._messageHandlers[id](this, message);
         }
     }
+ 
+    send(message: any) {
+        this._ws.send(message, this.onMessageError.bind(this));
+    }
+
+    onMessageError(error: Error): void {
+
+    }
 }

@@ -20,6 +20,8 @@ export class Room {
     minPlayer = 1;
     maxPlayer = 16;
 
+    private _stateSyncInterval: NodeJS.Timer;
+
     constructor() {
         this.id = Utils.generateID();
     }
@@ -71,8 +73,30 @@ export class Room {
         this._messageHandlers[messageID] = messageCallback;
     }
 
+    /**
+     * This method should be defined before setPatchRate
+     */
+    onStateBroadcast?(): void;
+
     setPatchRate(patchRate: number) {
         this._patchRate = patchRate;
+        if (this._stateSyncInterval) {
+            clearInterval(this._stateSyncInterval);
+            this._stateSyncInterval = undefined;
+        }
+        if (patchRate !== null && patchRate !== 0 && this.onStateBroadcast) {
+            this._stateSyncInterval = setInterval(this.onStateBroadcast.bind(this), this._patchRate);
+        }
+    }
+
+    /**
+     * Broadcast message to all clients
+     * @param message message to broadcast, it can be either binary or JSON string
+     */
+    broadcast(message: any) {
+        this._clients.forEach((client: Client) => {
+            client.send(message);
+        })
     }
 
     setPrivate(isPrivate: boolean) {
