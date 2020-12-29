@@ -9,27 +9,31 @@ enum MessageType {
     // OPERTATION MESSAGES: DO NOT CHANGE ANYTHING FROM 0-9
     JOIN_ROOM = 0;
     LEAVE_ROOM = 1;
-    
-    OP_END = 9;
-    // Custom
+    PING = 2;
+    GAME_STATE = 3;
 
+    OP_END = 9;
+    // From 10+ for custom messages
+    TEST = 10;
 }
 
 // OPERATION MESSAGES: Begin
 message Client_JoinRoom {
-    MessageType messageType = 0;
+    MessageType messageType = 1;
 }
 
 message Client_LeaveRoom {
-    MessageType messageType = 0;
+    MessageType messageType = 1;
 }
 // OPERATION MESSAGES: End
 
-// CUSTOM MESSAGES
+// Modify this message based on game specification
+message GameState {
+    MessageType mesageType = 1;
+}
 
-// Sample custom message
-message Client_Move {
-    MessageType messageType = 0;
-    uint32 moveX = 1;
-    uint32 moveY = 2;
+// Custom messages
+message Client_Test {
+    MessageType messageType = 1;
+    string text = 2;
 }
