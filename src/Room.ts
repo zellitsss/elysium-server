@@ -47,7 +47,7 @@ export class Room {
 
     public _onLeave(client: Client) {
         
-        let foundIndex: number = this._clients.findIndex((c: Client) => {
+        const foundIndex: number = this._clients.findIndex((c: Client) => {
             return client.id === c.id;
         });
         if (foundIndex >= 0) {

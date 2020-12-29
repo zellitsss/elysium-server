@@ -27,9 +27,21 @@ message Client_LeaveRoom {
 }
 // OPERATION MESSAGES: End
 
+message Vec2 {
+    float x = 1;
+    float y = 2;
+}
+
+message PlayerState {
+    string id = 1;
+    string name = 2;
+    Vec2 position = 3;
+}
+
 // Modify this message based on game specification
 message GameState {
     MessageType mesageType = 1;
+    repeated PlayerState players = 2;
 }
 
 // Custom messages

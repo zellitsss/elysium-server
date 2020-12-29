@@ -478,6 +478,453 @@
         return Client_LeaveRoom;
     })();
     
+    $root.Vec2 = (function() {
+    
+        /**
+         * Properties of a Vec2.
+         * @exports IVec2
+         * @interface IVec2
+         * @property {number|null} [x] Vec2 x
+         * @property {number|null} [y] Vec2 y
+         */
+    
+        /**
+         * Constructs a new Vec2.
+         * @exports Vec2
+         * @classdesc Represents a Vec2.
+         * @implements IVec2
+         * @constructor
+         * @param {IVec2=} [properties] Properties to set
+         */
+        function Vec2(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+    
+        /**
+         * Vec2 x.
+         * @member {number} x
+         * @memberof Vec2
+         * @instance
+         */
+        Vec2.prototype.x = 0;
+    
+        /**
+         * Vec2 y.
+         * @member {number} y
+         * @memberof Vec2
+         * @instance
+         */
+        Vec2.prototype.y = 0;
+    
+        /**
+         * Creates a new Vec2 instance using the specified properties.
+         * @function create
+         * @memberof Vec2
+         * @static
+         * @param {IVec2=} [properties] Properties to set
+         * @returns {Vec2} Vec2 instance
+         */
+        Vec2.create = function create(properties) {
+            return new Vec2(properties);
+        };
+    
+        /**
+         * Encodes the specified Vec2 message. Does not implicitly {@link Vec2.verify|verify} messages.
+         * @function encode
+         * @memberof Vec2
+         * @static
+         * @param {IVec2} message Vec2 message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Vec2.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.x != null && Object.hasOwnProperty.call(message, "x"))
+                writer.uint32(/* id 1, wireType 5 =*/13).float(message.x);
+            if (message.y != null && Object.hasOwnProperty.call(message, "y"))
+                writer.uint32(/* id 2, wireType 5 =*/21).float(message.y);
+            return writer;
+        };
+    
+        /**
+         * Encodes the specified Vec2 message, length delimited. Does not implicitly {@link Vec2.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof Vec2
+         * @static
+         * @param {IVec2} message Vec2 message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Vec2.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+    
+        /**
+         * Decodes a Vec2 message from the specified reader or buffer.
+         * @function decode
+         * @memberof Vec2
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {Vec2} Vec2
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Vec2.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Vec2();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.x = reader.float();
+                    break;
+                case 2:
+                    message.y = reader.float();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+    
+        /**
+         * Decodes a Vec2 message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof Vec2
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {Vec2} Vec2
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Vec2.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+    
+        /**
+         * Verifies a Vec2 message.
+         * @function verify
+         * @memberof Vec2
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Vec2.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.x != null && message.hasOwnProperty("x"))
+                if (typeof message.x !== "number")
+                    return "x: number expected";
+            if (message.y != null && message.hasOwnProperty("y"))
+                if (typeof message.y !== "number")
+                    return "y: number expected";
+            return null;
+        };
+    
+        /**
+         * Creates a Vec2 message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof Vec2
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {Vec2} Vec2
+         */
+        Vec2.fromObject = function fromObject(object) {
+            if (object instanceof $root.Vec2)
+                return object;
+            var message = new $root.Vec2();
+            if (object.x != null)
+                message.x = Number(object.x);
+            if (object.y != null)
+                message.y = Number(object.y);
+            return message;
+        };
+    
+        /**
+         * Creates a plain object from a Vec2 message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof Vec2
+         * @static
+         * @param {Vec2} message Vec2
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Vec2.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.x = 0;
+                object.y = 0;
+            }
+            if (message.x != null && message.hasOwnProperty("x"))
+                object.x = options.json && !isFinite(message.x) ? String(message.x) : message.x;
+            if (message.y != null && message.hasOwnProperty("y"))
+                object.y = options.json && !isFinite(message.y) ? String(message.y) : message.y;
+            return object;
+        };
+    
+        /**
+         * Converts this Vec2 to JSON.
+         * @function toJSON
+         * @memberof Vec2
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Vec2.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+    
+        return Vec2;
+    })();
+    
+    $root.PlayerState = (function() {
+    
+        /**
+         * Properties of a PlayerState.
+         * @exports IPlayerState
+         * @interface IPlayerState
+         * @property {string|null} [id] PlayerState id
+         * @property {string|null} [name] PlayerState name
+         * @property {IVec2|null} [position] PlayerState position
+         */
+    
+        /**
+         * Constructs a new PlayerState.
+         * @exports PlayerState
+         * @classdesc Represents a PlayerState.
+         * @implements IPlayerState
+         * @constructor
+         * @param {IPlayerState=} [properties] Properties to set
+         */
+        function PlayerState(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+    
+        /**
+         * PlayerState id.
+         * @member {string} id
+         * @memberof PlayerState
+         * @instance
+         */
+        PlayerState.prototype.id = "";
+    
+        /**
+         * PlayerState name.
+         * @member {string} name
+         * @memberof PlayerState
+         * @instance
+         */
+        PlayerState.prototype.name = "";
+    
+        /**
+         * PlayerState position.
+         * @member {IVec2|null|undefined} position
+         * @memberof PlayerState
+         * @instance
+         */
+        PlayerState.prototype.position = null;
+    
+        /**
+         * Creates a new PlayerState instance using the specified properties.
+         * @function create
+         * @memberof PlayerState
+         * @static
+         * @param {IPlayerState=} [properties] Properties to set
+         * @returns {PlayerState} PlayerState instance
+         */
+        PlayerState.create = function create(properties) {
+            return new PlayerState(properties);
+        };
+    
+        /**
+         * Encodes the specified PlayerState message. Does not implicitly {@link PlayerState.verify|verify} messages.
+         * @function encode
+         * @memberof PlayerState
+         * @static
+         * @param {IPlayerState} message PlayerState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerState.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.position != null && Object.hasOwnProperty.call(message, "position"))
+                $root.Vec2.encode(message.position, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+    
+        /**
+         * Encodes the specified PlayerState message, length delimited. Does not implicitly {@link PlayerState.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof PlayerState
+         * @static
+         * @param {IPlayerState} message PlayerState message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerState.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+    
+        /**
+         * Decodes a PlayerState message from the specified reader or buffer.
+         * @function decode
+         * @memberof PlayerState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {PlayerState} PlayerState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerState.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.PlayerState();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.position = $root.Vec2.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+    
+        /**
+         * Decodes a PlayerState message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof PlayerState
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {PlayerState} PlayerState
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerState.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+    
+        /**
+         * Verifies a PlayerState message.
+         * @function verify
+         * @memberof PlayerState
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerState.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.position != null && message.hasOwnProperty("position")) {
+                var error = $root.Vec2.verify(message.position);
+                if (error)
+                    return "position." + error;
+            }
+            return null;
+        };
+    
+        /**
+         * Creates a PlayerState message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof PlayerState
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {PlayerState} PlayerState
+         */
+        PlayerState.fromObject = function fromObject(object) {
+            if (object instanceof $root.PlayerState)
+                return object;
+            var message = new $root.PlayerState();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.position != null) {
+                if (typeof object.position !== "object")
+                    throw TypeError(".PlayerState.position: object expected");
+                message.position = $root.Vec2.fromObject(object.position);
+            }
+            return message;
+        };
+    
+        /**
+         * Creates a plain object from a PlayerState message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof PlayerState
+         * @static
+         * @param {PlayerState} message PlayerState
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerState.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.id = "";
+                object.name = "";
+                object.position = null;
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.position != null && message.hasOwnProperty("position"))
+                object.position = $root.Vec2.toObject(message.position, options);
+            return object;
+        };
+    
+        /**
+         * Converts this PlayerState to JSON.
+         * @function toJSON
+         * @memberof PlayerState
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerState.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+    
+        return PlayerState;
+    })();
+    
     $root.GameState = (function() {
     
         /**
@@ -485,6 +932,7 @@
          * @exports IGameState
          * @interface IGameState
          * @property {MessageType|null} [mesageType] GameState mesageType
+         * @property {Array.<IPlayerState>|null} [players] GameState players
          */
     
         /**
@@ -496,6 +944,7 @@
          * @param {IGameState=} [properties] Properties to set
          */
         function GameState(properties) {
+            this.players = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -509,6 +958,14 @@
          * @instance
          */
         GameState.prototype.mesageType = 0;
+    
+        /**
+         * GameState players.
+         * @member {Array.<IPlayerState>} players
+         * @memberof GameState
+         * @instance
+         */
+        GameState.prototype.players = $util.emptyArray;
     
         /**
          * Creates a new GameState instance using the specified properties.
@@ -536,6 +993,9 @@
                 writer = $Writer.create();
             if (message.mesageType != null && Object.hasOwnProperty.call(message, "mesageType"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.mesageType);
+            if (message.players != null && message.players.length)
+                for (var i = 0; i < message.players.length; ++i)
+                    $root.PlayerState.encode(message.players[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
     
@@ -572,6 +1032,11 @@
                 switch (tag >>> 3) {
                 case 1:
                     message.mesageType = reader.int32();
+                    break;
+                case 2:
+                    if (!(message.players && message.players.length))
+                        message.players = [];
+                    message.players.push($root.PlayerState.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -620,6 +1085,15 @@
                 case 10:
                     break;
                 }
+            if (message.players != null && message.hasOwnProperty("players")) {
+                if (!Array.isArray(message.players))
+                    return "players: array expected";
+                for (var i = 0; i < message.players.length; ++i) {
+                    var error = $root.PlayerState.verify(message.players[i]);
+                    if (error)
+                        return "players." + error;
+                }
+            }
             return null;
         };
     
@@ -661,6 +1135,16 @@
                 message.mesageType = 10;
                 break;
             }
+            if (object.players) {
+                if (!Array.isArray(object.players))
+                    throw TypeError(".GameState.players: array expected");
+                message.players = [];
+                for (var i = 0; i < object.players.length; ++i) {
+                    if (typeof object.players[i] !== "object")
+                        throw TypeError(".GameState.players: object expected");
+                    message.players[i] = $root.PlayerState.fromObject(object.players[i]);
+                }
+            }
             return message;
         };
     
@@ -677,10 +1161,17 @@
             if (!options)
                 options = {};
             var object = {};
+            if (options.arrays || options.defaults)
+                object.players = [];
             if (options.defaults)
                 object.mesageType = options.enums === String ? "JOIN_ROOM" : 0;
             if (message.mesageType != null && message.hasOwnProperty("mesageType"))
                 object.mesageType = options.enums === String ? $root.MessageType[message.mesageType] : message.mesageType;
+            if (message.players && message.players.length) {
+                object.players = [];
+                for (var j = 0; j < message.players.length; ++j)
+                    object.players[j] = $root.PlayerState.toObject(message.players[j], options);
+            }
             return object;
         };
     
