@@ -49,6 +49,6 @@ export class Client {
     }
 
     onMessageError(error: Error): void {
-
+        console.log(error.message);
     }
 }

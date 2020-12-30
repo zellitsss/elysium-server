@@ -96,7 +96,7 @@ export class Room {
     broadcast(message: any) {
         this._clients.forEach((client: Client) => {
             client.send(message);
-        })
+        });
     }
 
     setPrivate(isPrivate: boolean) {
